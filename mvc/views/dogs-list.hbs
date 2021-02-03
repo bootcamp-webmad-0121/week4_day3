@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perros MVC time!</title>
+</head>
+
+<body>
+
+    <h1>Estos son los perros:</h1>
+
+    {{#each dogs}}
+    <p>Nombre: <strong>{{name}}</strong></p>
+    <p>Edad: {{age}} años</p>
+    <p>Ciudad: {{city}}</p>
+    <hr>
+    {{/each}}
+</body>
+
+</html>
