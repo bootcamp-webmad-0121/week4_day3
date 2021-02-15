@@ -40,7 +40,7 @@
   
   ![MVC](https://i.imgur.com/LUhoPkS.png)
 
-## Extra: Mongoose instance methods
+## Extra: Mongoose custom methods
 
 Además de los métodos presentes por defecto en Mongoose, es posible dotar a los esquemas de métodos personalizados tanto estáticos como de instancia:
 
