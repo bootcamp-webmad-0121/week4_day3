@@ -39,3 +39,79 @@
   * La vista integra los datos previo a ser devuelta al navegador para ser renderizada.
   
   ![MVC](https://i.imgur.com/LUhoPkS.png)
+
+## Extra: Mongoose instance methods
+
+Además de los métodos presentes por defecto en Mongoose, es posible dotar a los esquemas de métodos personalizados tanto estáticos como de instancia:
+
+
+
+- Métodos estáticos: aplicados sobre el propio modelo
+
+  ````javascript
+  const userSchema = new mongoose.Schema({
+      name: String,
+      lastName: String,
+      job: String
+  })
+
+  userSchema.statics.getUserComments = function(id) {      
+      return mongoose.model('Comment').find({ user_id: id })
+  }
+  
+  userSchema.statics.findByJob = function(job) {
+      return this.find({ job: new RegExp(job, 'i') })
+  }
+  
+  const User = mongoose.model('User', userSchema)
+  
+  ````
+  
+  Uso:
+  ````javascript
+  const User = require('./../models/user.model.js')
+  
+  User
+    .getUserComments('5a2539b41c574006c46f1a07')
+    .then(comments => comments.forEach(elm => console.log(elm))
+    
+  User
+    .findByJob('teacher')
+    .then(users => users.forEach(elm => console.log(elm))
+  ````
+  
+  
+  
+- Métodos de instancia: aplicados sobre instancias realizadas con el modelo, hacen uso de datos presentes en el mismo mediante `this`
+
+  ````javascript
+  const userSchema = new mongoose.Schema({
+      name: String,
+      lastName: String,
+  })
+
+  userSchema.methods.getFullName = function() {   // no usar funciones flecha para mantener el contexto de this
+      return `${this.name} ${this.lastName}`
+  }
+  
+  const User = mongoose.model('User', userSchema)
+  
+  ````
+  
+  Uso:
+  ````javascript
+    const User = require('./../models/user.model.js')
+    
+    const person = new User({name: 'John', lastName: 'Doe'})
+    
+    person
+      .getFullName()
+      .then(fullName => console.log(fullName))
+  ````
+  
+  
+
+
+
+
+
